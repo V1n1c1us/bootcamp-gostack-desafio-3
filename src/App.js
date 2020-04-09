@@ -17,7 +17,8 @@ function App() {
   }
 
   async function handleAddRepository() {
-    const response = await api.post('repositories', {
+    
+    const data = {
       title: `Desafio 3 - Bootcamp ${Date.now()}`,
 	    url: 'http://github.com',
 	    techs: [
@@ -26,9 +27,15 @@ function App() {
 		      'React Native'
 	    ],
 	    likes: 0
-    });
-    
-    setRepositories([...repositories, response.data]);
+    }
+
+    try {
+      const response = await api.post('repositories', data);
+      
+      setRepositories([...repositories, response.data]);
+    }catch(err) {
+      alert('Oops.. something wrong is not right :)');  
+    }
   }
 
   async function handleRemoveRepository(id) {
